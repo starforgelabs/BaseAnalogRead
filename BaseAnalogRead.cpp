@@ -15,30 +15,17 @@
 
 #include "BaseAnalogRead.h"
 
-BaseAnalogRead::BaseAnalogRead(const byte aPinNumber)
-{
-  _Pin = aPinNumber;
-}
-
-BaseAnalogRead::~BaseAnalogRead()
-{
+BaseAnalogRead::BaseAnalogRead(const byte aPinNumber) 
+{ 
+  _Pin = aPinNumber; 
+  Enabled = true;
 }
 
 int BaseAnalogRead::Read()
 {
-  Reading = analogRead(_Pin);
+  if(Enabled)
+    Reading = analogRead(_Pin);
 
   return Reading;
-}
-
-
-byte BaseAnalogRead::PinNumber()
-{
-  return _Pin;
-}
-
-void BaseAnalogRead::setPinNumber(const byte aPinNumber)
-{
-  _Pin = aPinNumber;
 }
 

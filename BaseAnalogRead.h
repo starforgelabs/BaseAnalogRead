@@ -37,6 +37,17 @@
 // 
 // EXAMPLE
 //
+// BaseAnalogRead sensor(3);
+// ...
+// int value = sensor.Read(); // reads analogue pin 3
+//
+// EXAMPLE
+//
+// BaseAnalogRead sensor();
+// ...
+// sensor.setPinNumber(3);
+// sensor.Read();
+// int value = sensor.Reading;
 //
 
 
@@ -44,33 +55,37 @@ class BaseAnalogRead
 {
   public:
     BaseAnalogRead(const byte aPinNumber=0);
-    virtual ~BaseAnalogRead();
+
+
+    // Set this to false to disable the actual call to analogRead().
+    // Testing can set Reading to a value to simulate before calling Read().
+    bool Enabled;
 
     //
     // Contains the latest reading from the sensor. 
     //
     int Reading;
 
-
     //
     // Returns the analogue pin number this instance reads.
     //
-    byte PinNumber();
+    byte PinNumber() { return _Pin; }
 
     //
     // Obtain the current sensor reading. 
+    //
+    // The value is cached in the Reading field as well as returned.
     //
     virtual int Read();
 
     //
     // Sets the analogue pin number this instance reads.
     //
-    void setPinNumber(const byte aPinNumber);
+    void setPinNumber(const byte aPinNumber) { _Pin = aPinNumber; }
 
   protected:
     // Analogue pin number to read.
     byte _Pin;
-
 };
 
 #endif // BASE_ANALOG_READ_H
